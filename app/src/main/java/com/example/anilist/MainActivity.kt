@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import com.example.anilist.Screens.Components.CardsTemp
+import com.example.anilist.Screens.Components.list
+import com.example.anilist.Screens.Screen.AnimeDetail
 import com.example.anilist.Screens.Screen.MainScreen
 import com.example.anilist.ui.theme.AniListTheme
 
@@ -21,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.surface
 
                 ) {
-                    MainScreen()
+                    com.example.anilist.Screens.Screen.List()
                 }
             }
         }

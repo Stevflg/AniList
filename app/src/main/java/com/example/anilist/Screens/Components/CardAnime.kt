@@ -26,14 +26,15 @@ import com.example.anilist.Screens.Screen.Lista
 
 @Composable
 fun CardAnime(listanime: Lista ) {
-
 Row(horizontalArrangement =Arrangement.Start,
     modifier = Modifier
-        .padding(start = 10.dp, top = 5.dp, end = 10.dp).clip(RoundedCornerShape(10))
-        .background(color = MaterialTheme.colors.background).clickable { }){
+        .padding(start = 10.dp, top = 5.dp ,end = 10.dp, bottom = 5.dp)
+        .clip(RoundedCornerShape(10))
+        .background(color = MaterialTheme.colors.background)
+        .clickable { }){
     Box(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp, start = 8.dp)) {
         AsyncImage(model = listanime.Imagen,
-            contentDescription ="Portada",
+            contentDescription = "Portada",
             contentScale = ContentScale.Crop,
         modifier = Modifier
             .height(110.dp)
@@ -68,17 +69,4 @@ Row(horizontalArrangement =Arrangement.Start,
         }
     }
     }
-}
-@Composable
-fun Contenido(){
-    Column() {
-        Spacer(modifier = Modifier.padding(top = 20.dp))
-
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun CardPreview(){
-  Contenido()
 }

@@ -10,15 +10,16 @@ private val DarkColorPalette = darkColors(
     surface = OrangeBlack,//Background
     primary = BlackLetter,//Letras
     background = BlackRow,//Color del row
-    secondary = BlackButt//Color botones
-
+    secondary = BlackButt,//Color botones
+    onSecondary = BlackLetter
 )
 
 private val LightColorPalette = lightColors(
     surface = OrangeWhite,
     primary = whiteLetter,
     background = BackRow,
-    secondary = OrangeButt
+    secondary = OrangeButt,
+    onSecondary = BlackLetter
 
     /* Other default colors to override
     background = Color.White,

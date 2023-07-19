@@ -2,6 +2,7 @@ package com.example.anilist.Screens.Screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.anilist.R
 
 @Composable
@@ -29,21 +31,25 @@ fun MainScreen(){
     Column(verticalArrangement = Arrangement.Top) {
         Spacer(modifier = Modifier.size(50.dp))
         Text("Menu", color = MaterialTheme.colors.primary,
-            style = TextStyle(fontSize = 40.sp), modifier = Modifier.align(alignment = Alignment.CenterHorizontally )
+            style = TextStyle(fontSize = 30.sp), modifier = Modifier.align(alignment = Alignment.CenterHorizontally )
         )
         Text("Principal", color = MaterialTheme.colors.primary,
-            style = TextStyle(fontSize = 40.sp), modifier = Modifier.align(alignment = Alignment.CenterHorizontally )
+            style = TextStyle(fontSize = 30.sp), modifier = Modifier.align(alignment = Alignment.CenterHorizontally )
         )
-        Spacer(modifier = Modifier.size(40.dp))
-
-            Image(painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription ="Portada",
+        Spacer(modifier = Modifier.size(10.dp))
+        Box(modifier = Modifier
+            .width(200.dp)
+            .height(290.dp).align(Alignment.CenterHorizontally))
+        {
+            AsyncImage(model = "https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg",
                 contentScale = ContentScale.Crop,
+                contentDescription = "Portada",
                 modifier = Modifier
-                    .height(300.dp)
-                    .width(200.dp)
                     .clip(RoundedCornerShape(20))
-                    .align(Alignment.CenterHorizontally))
+                    .width(200.dp)
+                    .height(270.dp)
+                    .align(Alignment.Center))
+        }
         Spacer(modifier = Modifier.size(20.dp))
         OutlinedButton(onClick = { /*TODO*/ }, colors = ButtonDefaults.outlinedButtonColors(backgroundColor = MaterialTheme.colors.secondary),
         modifier = Modifier.align(Alignment.CenterHorizontally)
