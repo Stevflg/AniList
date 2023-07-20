@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.example.anilist.Screens.Components.CardsTemp
+import com.example.anilist.Screens.Components.Prev
 import com.example.anilist.Screens.Components.list
 import com.example.anilist.Screens.Screen.AnimeDetail
 import com.example.anilist.Screens.Screen.MainScreen
@@ -24,7 +25,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.surface
 
                 ) {
-                    com.example.anilist.Screens.Screen.List()
+                    //AnimeDetail()
+                    //Prev()
+                    MainScreen()
                 }
             }
         }
