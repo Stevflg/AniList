@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,14 +16,18 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
+import com.example.anilist.Data.Entities.Anime
+import com.example.anilist.Data.MyViewModel
 import com.example.anilist.Screens.Components.CardAnime
+import com.example.anilist.Screens.Components.list
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -42,28 +45,45 @@ fun List(){
                     .width(20.dp))
         }
     }){
-        Content(lista)
+        val viewModel:MyViewModel = MyViewModel()
+        val listAnime=viewModel.itemLiveData
+        LaunchedEffect(true){
+            viewModel.fetchAnimes()
+        }
+        Content(listanimes = listAnime.value!!)
     }
 }
-data class Lista(val Nombre:String, val Estreno:String,val Genero:String,val Imagen:String)
-val lista = listOf <Lista> (
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg"),
-    Lista("Shingeki no kiojin","Primavera 2022","Shonen","https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg")
-
-)
 @Composable
-fun Content(listanimes: List<Lista>){
+fun Content(listanimes: List<Anime>){
     LazyColumn{
-        items(listanimes){lista ->
+        items(listanimes?: emptyList()){ lista ->
         CardAnime(lista)
         }
     }
 }
 
+/*private fun getRetrofit(): Retrofit{
+    return Retrofit.Builder()
+        .baseUrl("anilist-1-t3664645.deta.app/")
+        .addConverterFactory(
+            GsonConverterFactory.create())
+        .build()
+}
+private fun anime_list__(Anime_list: MutableList<Anime>) {
+     try{
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = getRetrofit().create(ApiService::class.java).getAnimes("anime/")
+            val animes = call.body()
+
+            withContext(Dispatchers.Main){
+                //Log.e("call",call.toString())
+                if(call.isSuccessful){
+                    val list = listOf<Anime>(animes!!)
+                    Anime_list.clear()
+                    Anime_list.addAll(list)
+                }
+            }
+        }
+        }catch (e:Exception){
+        } }
+*/
