@@ -35,16 +35,17 @@ Row(horizontalArrangement =Arrangement.Start,
             .width(80.dp)
             .clip(RoundedCornerShape(20)))
     }
-    Spacer(modifier=Modifier.size(20.dp))
+    Spacer(modifier=Modifier.size(10.dp))
     Row(horizontalArrangement = Arrangement.Center,
-    modifier = Modifier.fillMaxWidth()){
+    modifier = Modifier.fillMaxWidth()
+        ){
         Column() {
             Row(horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()){
                 Text(listanime.Nombre, style = TextStyle(fontSize = 20.sp),
                 fontWeight = FontWeight.Bold, color = MaterialTheme.colors.primary)
             }
-            Spacer(modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.size(5.dp))
             Row(horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()){
                 Text("Estreno : ", style = TextStyle(fontSize = 15.sp),
@@ -52,9 +53,10 @@ Row(horizontalArrangement =Arrangement.Start,
                 Text(listanime.Estreno,style = TextStyle(fontSize = 15.sp)
                     , color = MaterialTheme.colors.primary)
             }
-            Spacer(modifier = Modifier.size(10.dp))
+
             Row(horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth()){
+                modifier = Modifier.fillMaxWidth()
+                    .padding(bottom =5.dp)){
                 Text("Genero :  ", style = TextStyle(fontSize = 15.sp),
                     fontWeight = FontWeight.Bold, color = MaterialTheme.colors.primary)
                 val generos = StringBuilder()

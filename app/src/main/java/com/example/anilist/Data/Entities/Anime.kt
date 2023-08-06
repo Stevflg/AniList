@@ -1,7 +1,4 @@
 package com.example.anilist.Data.Entities
-
-
-
 import com.google.gson.annotations.SerializedName
 
 data class Anime(

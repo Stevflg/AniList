@@ -4,20 +4,21 @@ import com.example.anilist.Data.Entities.Anime
 import com.example.anilist.Data.Entities.AnimeDetail
 import com.example.anilist.Data.Entities.Temporadas
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface ApiService {
-    @GET("anime")
+    @GET("anime/")
     suspend fun getAnimes(): List<Anime>
 
-    @GET("")
-    suspend fun getDetails(@Query("id") Id:String): Call<AnimeDetail>
+    @GET
+    suspend fun getDetails(@Url Id:String): List<AnimeDetail>
 
-    @GET("anime/{idAnim}/")
-    suspend fun getTremporadas(@Query("idAnim") IdAnim:String):Call<Temporadas>
+    @GET
+    suspend fun getTremporadas(@Url IdAnim:String):List<Temporadas>
 
-    @GET ("anime/{id}/")
-    suspend fun getCapitulos(@Query("idAnim") IdAnim:String,
-                         @Query("id") IdTemp:String): Call<Anime>
+    @GET
+    suspend fun getCapitulos(@Url IdAnim_Temp:String): List<Anime>
 }

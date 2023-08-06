@@ -8,10 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.example.anilist.Screens.Components.CardsTemp
-import com.example.anilist.Screens.Components.Prev
-import com.example.anilist.Screens.Components.list
 import com.example.anilist.Screens.Screen.AnimeDetail
-import com.example.anilist.Screens.Screen.MainScreen
 import com.example.anilist.ui.theme.AniListTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +25,8 @@ class MainActivity : ComponentActivity() {
                     //AnimeDetail()
                     //Prev()
                     //MainScreen()
-                    com.example.anilist.Screens.Screen.List()
+                    //com.example.anilist.Screens.Screen.List()
+                    CardsTemp("64b4a10857112db61a5290ed")
                 }
             }
         }

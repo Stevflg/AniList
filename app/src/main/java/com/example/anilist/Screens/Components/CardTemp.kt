@@ -14,6 +14,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,20 +27,43 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.anilist.Data.Entities.AnimeDetail
+import com.example.anilist.Data.Entities.Temporadas
+import com.example.anilist.Data.Entities.Temps
+import com.example.anilist.Data.ServicesApi.ApiClient
+import com.example.anilist.Screens.Screen.ContentDetail
+import com.example.anilist.Screens.Screen.fetchAnimeDetail
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 @Composable
-fun CardsTemp(Temps: List<Temps>){
-    LazyRow(modifier = Modifier
-        .height(170.dp)
-        .padding(top = 20.dp, start = 10.dp, end = 10.dp)
-        .background(color = MaterialTheme.colors.background),
-        horizontalArrangement = Arrangement.Center){
-        items(Temps){
-                listemps->CardTemp(listemps)
+fun CardsTemp(idAnime: String){
+    var isLoading by remember { mutableStateOf(true) }
+    val listTemp = remember { mutableStateOf<List<Temporadas>>(emptyList()) }
+    LaunchedEffect(Unit){
+        isLoading = true
+        val tempState = fetchTemps(idAnime)
+        listTemp.value = tempState
+        isLoading = false
+    }
+    if(isLoading){
+        LoadingScreen()
+    }
+    else{
+
+        LazyRow(modifier = Modifier
+            .height(170.dp)
+            .padding(top = 20.dp, start = 10.dp, end = 10.dp)
+            .background(color = MaterialTheme.colors.background),
+            horizontalArrangement = Arrangement.Center){
+            items(listTemp.value){
+                    listemps->CardTemp(listemps.Temporadas)
+            }
         }
     }
 }
 @Composable
-fun CardTemp(temps: Temps){
+fun CardTemp(temps: List<Temps>){
     Column (modifier = Modifier
         .clickable { }
         .padding(start = 5.dp, end = 5.dp,top=5.dp, bottom = 5.dp)){
@@ -43,34 +71,26 @@ fun CardTemp(temps: Temps){
             .width(90.dp)
             .height(120.dp))
         {
-            AsyncImage(model = temps.image, contentScale = ContentScale.Crop,contentDescription = "Portada", modifier = Modifier
+            AsyncImage(model = temps[1].image_url, contentScale = ContentScale.Crop,contentDescription = "Portada", modifier = Modifier
                 .clip(RoundedCornerShape(20))
                 .height(120.dp)
                 .width(80.dp)
                 .align(Alignment.Center))
-        }/*Image(painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "Portada",
-        modifier = Modifier.align(Alignment.CenterHorizontally))*/
+        }
 
-        Text(text = "Temp "+ temps.temp,color = MaterialTheme.colors.primary,
+        Text(text = "Temp "+ temps[0].number,color = MaterialTheme.colors.primary,
         modifier = Modifier.align(Alignment.CenterHorizontally), fontWeight = FontWeight.Bold)
     }
 
 }
-data class Temps(val temp: String, val image: String)
-val list = listOf<Temps>(
-    Temps("1","https://i.pinimg.com/originals/d1/fe/cb/d1fecbe74fb406e1d4e53cc2a666d33c.jpg"),
-    Temps("2","https://i.pinimg.com/originals/d1/fe/cb/d1fecbe74fb406e1d4e53cc2a666d33c.jpg"),
-    Temps("3","https://i.pinimg.com/originals/d1/fe/cb/d1fecbe74fb406e1d4e53cc2a666d33c.jpg"),
-    Temps("4","https://i.pinimg.com/originals/d1/fe/cb/d1fecbe74fb406e1d4e53cc2a666d33c.jpg"),
-    Temps("5","https://i.pinimg.com/originals/d1/fe/cb/d1fecbe74fb406e1d4e53cc2a666d33c.jpg"),
-    Temps("6","https://i.pinimg.com/originals/d1/fe/cb/d1fecbe74fb406e1d4e53cc2a666d33c.jpg"),
-    Temps("7","https://i.pinimg.com/originals/d1/fe/cb/d1fecbe74fb406e1d4e53cc2a666d33c.jpg"))
 
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun CardTempPreview(){
-
+suspend fun fetchTemps(idAnime: String):List<Temporadas>{
+    return withContext(Dispatchers.IO){
+        try {
+            val response = ApiClient.apiService.getTremporadas("anime/season/${idAnime}")
+            response
+        }catch (e:Exception){
+            emptyList()
+        }
+    }
 }
