@@ -40,9 +40,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.anilist.Data.Entities.AnimeDetail
-import com.example.anilist.Data.Entities.Temporadas
 import com.example.anilist.Data.ServicesApi.ApiClient
 import com.example.anilist.Screens.Components.CardsTemp
 import com.example.anilist.Screens.Components.LoadingScreen
@@ -51,7 +51,7 @@ import kotlinx.coroutines.withContext
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AnimeDetail(){
+fun AnimeDetail(navController: NavController,idAnime: String, Imagen: String){
 Scaffold(topBar = {
     TopAppBar() {
         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back",
@@ -67,7 +67,6 @@ Scaffold(topBar = {
 }) {
     var isLoading by remember { mutableStateOf(true) }
     val animeDetail = remember{ mutableStateOf<List<AnimeDetail>>(emptyList()) }
-    val listTemp = remember { mutableStateOf<List<Temporadas>>(emptyList()) }
     LaunchedEffect(Unit){
         isLoading = true
         val animestate= fetchAnimeDetail()
@@ -78,12 +77,12 @@ Scaffold(topBar = {
         LoadingScreen()
     }
     else{
-            ContentDetail(animeDetail.value,"","64b4a10857112db61a5290ed")
+            ContentDetail(navController,animeDetail.value, Imagen, idAnime)
     }
 }
 }
 @Composable
-fun ContentDetail(detail:List<AnimeDetail>,Imagen : String,AnimeId: String){
+fun ContentDetail(navController: NavController,detail:List<AnimeDetail>,Imagen: String,AnimeId: String){
     val id by remember {mutableStateOf(AnimeId)}
     val animeDetail: AnimeDetail? =detail.find { it.IdAnime == id}
 Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -151,17 +150,16 @@ modifier = Modifier
     Text("Temporadas", textDecoration = TextDecoration.Underline ,style = TextStyle(fontSize = 17.sp),
         fontWeight = FontWeight.Bold, color = MaterialTheme.colors.primary)
     Spacer(modifier = Modifier.size(5.dp))
-    CardsTemp(AnimeId)
+    CardsTemp(navController,id)
     Spacer(modifier = Modifier.size(20.dp))
 }
 }
-
 
 suspend fun fetchAnimeDetail():List<AnimeDetail>{
     return withContext(Dispatchers.IO){
         try {
             val response = ApiClient.apiService.getDetails("anime/detail/")
-            response
+            return@withContext response
         }catch (e:Exception){
             emptyList()
         }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,14 +26,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.anilist.Screens.Components.CardAnime
-import com.example.anilist.Screens.Components.Dialogo
+import com.example.anilist.Screens.AppNavigation.AppScreens
 
 @Composable
-fun MainScreen(){
-    var show by remember { mutableStateOf(false) }
-    Column(verticalArrangement = Arrangement.Top) {
+fun MainScreen(navController: NavController){
+    Column(verticalArrangement = Arrangement.Top, modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.size(50.dp))
         Text("Menu", color = MaterialTheme.colors.primary,
             style = TextStyle(fontSize = 30.sp), modifier = Modifier.align(alignment = Alignment.CenterHorizontally )
@@ -56,20 +56,13 @@ fun MainScreen(){
                     .align(Alignment.Center))
         }
         Spacer(modifier = Modifier.size(20.dp))
-        Button(onClick = { show = true
-                         }, colors = ButtonDefaults.outlinedButtonColors(backgroundColor = MaterialTheme.colors.secondary),
+        Button(onClick = {navController.navigate(AppScreens.List.route)}
+            , colors = ButtonDefaults.outlinedButtonColors(backgroundColor = MaterialTheme.colors.secondary),
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
             .clip(RoundedCornerShape(80))) {
             Text("  Abrir  ", color = MaterialTheme.colors.primary)
         }
-        if (show){
-            List()
-        }
+
     }
-}
-@Preview(showSystemUi = true)
-@Composable
-fun prev(){
-    MainScreen()
 }

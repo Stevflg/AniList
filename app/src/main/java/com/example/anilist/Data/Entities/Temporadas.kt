@@ -8,4 +8,8 @@ data class Temporadas(
     @SerializedName("anime_id") val IdAnime:String,
     @SerializedName("anime_name") val NombreAnime: String
 )
-data class Temps(val number : String, val image_url:String)
+data class Temps(
+    @SerializedName("number") val Numero : String,
+    @SerializedName("image_url") val Imagen: String
+
+    )
