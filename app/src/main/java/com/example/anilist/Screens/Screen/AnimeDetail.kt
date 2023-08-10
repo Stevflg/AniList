@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.anilist.Data.Entities.AnimeDetail
+import com.example.anilist.Data.Entities.Temps
 import com.example.anilist.Data.ServicesApi.ApiClient
 import com.example.anilist.Screens.Components.CardsTemp
 import com.example.anilist.Screens.Components.LoadingScreen
@@ -51,11 +52,11 @@ import kotlinx.coroutines.withContext
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AnimeDetail(navController: NavController,idAnime: String, Imagen: String){
+fun AnimeDetail(navController: NavController,idAnime: String){
 Scaffold(topBar = {
     TopAppBar() {
         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back",
-            modifier = Modifier.clickable { })
+            modifier = Modifier.clickable {navController.popBackStack() })
         Spacer(modifier = Modifier.size(135.dp))
         Text("AniList",textAlign= TextAlign.Start,
             fontWeight = FontWeight.Bold, color = MaterialTheme.colors.onSecondary,
@@ -71,18 +72,21 @@ Scaffold(topBar = {
         isLoading = true
         val animestate= fetchAnimeDetail()
         animeDetail.value = animestate
+        getImage(idAnime)
         isLoading = false
     }
     if(isLoading){
         LoadingScreen()
     }
     else{
-            ContentDetail(navController,animeDetail.value, Imagen, idAnime)
+            ContentDetail(navController,animeDetail.value, idAnime)
     }
 }
 }
+var Imagen_: String = ""
+
 @Composable
-fun ContentDetail(navController: NavController,detail:List<AnimeDetail>,Imagen: String,AnimeId: String){
+fun ContentDetail(navController: NavController,detail:List<AnimeDetail>,AnimeId: String){
     val id by remember {mutableStateOf(AnimeId)}
     val animeDetail: AnimeDetail? =detail.find { it.IdAnime == id}
 Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -104,7 +108,7 @@ modifier = Modifier
         .width(200.dp)
         .height(290.dp))
     {
-        AsyncImage(model = "$Imagen",
+        AsyncImage(Imagen_ ,
             contentScale = ContentScale.Crop,
             contentDescription = "Portada",
             modifier = Modifier
@@ -166,4 +170,14 @@ suspend fun fetchAnimeDetail():List<AnimeDetail>{
     }
 }
 
-
+suspend fun getImage(idAnime: String){
+    return withContext(Dispatchers.IO){
+        try {
+            val response = ApiClient.apiService.getAnimes()
+            val listanim = response.find { it.Id == idAnime }?.Imagen
+            Imagen_ = listanim.toString()
+        }catch (e:Exception){
+            Imagen_=" "
+        }
+    }
+}

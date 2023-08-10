@@ -22,13 +22,11 @@ fun AppNavigation(){
         composable(route = AppScreens.List.route){
           List(navController = navController)
         }
-        composable(route = AppScreens.AnimeDetail.route+"/{idAnime}/{imagen}",
+        composable(route = AppScreens.AnimeDetail.route+"/{idAnime}",
             arguments = listOf(
-                navArgument("idAnime"){type = NavType.StringType},
-                navArgument("imagen"){type = NavType.StringType}
+                navArgument("idAnime"){type = NavType.StringType}
             )){
-            AnimeDetail(navController = navController, idAnime = it.arguments?.getString("idAnime")!!,
-                Imagen = it.arguments?.getString("imagen")!!)
+            AnimeDetail(navController = navController, idAnime = it.arguments?.getString("idAnime")!!)
         }
         composable(route = AppScreens.Temporadas.route+"/{idAnime}",
         arguments = listOf(navArgument("idAnime"){type = NavType.StringType})){
