@@ -46,7 +46,7 @@ fun MainScreen(navController: NavController){
             .height(290.dp)
             .align(Alignment.CenterHorizontally))
         {
-            AsyncImage(model = "https://pm1.narvii.com/6571/5109c140269cef1eddf6301575dfe133fe1d2d51_hq.jpg",
+            AsyncImage(model = "https://multianime.com.mx/wp-content/uploads/2022/09/anime-nier-automata-2b-oficial.jpg",
                 contentScale = ContentScale.Crop,
                 contentDescription = "Portada",
                 modifier = Modifier

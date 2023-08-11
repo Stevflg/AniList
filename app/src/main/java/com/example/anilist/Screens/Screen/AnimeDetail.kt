@@ -57,8 +57,7 @@ Scaffold(topBar = {
     TopAppBar() {
         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back",
             modifier = Modifier.clickable {navController.popBackStack() })
-        Spacer(modifier = Modifier.size(135.dp))
-        Text("AniList",textAlign= TextAlign.Start,
+        Text("AniList",textAlign= TextAlign.Center,
             fontWeight = FontWeight.Bold, color = MaterialTheme.colors.onSecondary,
             style = TextStyle(fontSize = 25.sp),
             modifier = Modifier
